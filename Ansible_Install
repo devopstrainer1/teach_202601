@@ -13,6 +13,14 @@ add-apt-repository --yes --update ppa:ansible/ansible
 apt install -y ansible
 
 
+# enable password based authentication
+
+cd /etc/ssh
+vi sshd_config
+
+# changing password authentication value from no to yes
+
+
 ## copy keys and setup master - slave
 
 # run this command as root user
