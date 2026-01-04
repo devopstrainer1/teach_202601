@@ -1,0 +1,13 @@
+####install on rhel
+
+  dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+  dnf config-manager --set-enabled epel
+  dnf install -y ansible
+  ansible --version
+
+### install on ubuntu
+
+apt update
+apt install -y software-properties-common
+add-apt-repository --yes --update ppa:ansible/ansible
+apt install -y ansible
