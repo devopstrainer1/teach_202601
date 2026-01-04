@@ -15,10 +15,11 @@ apt install -y ansible
 
 ## copy keys and setup master - slave
 
+# run this command as root user
 adduser amit
+# switch to amit user
+su amit
 ssh-keygen
-exit
-clear
 cd ~/.ssh
 ls -lrt
 ssh-copy-id -i ~/.ssh/id_ed25519.pub(public key name) amit@34.134.237.167( slave node IP address)
