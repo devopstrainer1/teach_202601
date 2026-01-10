@@ -23,7 +23,7 @@ vi sshd_config
 
 ## copy keys and setup master - slave
 
-# run this command as root user
+# run this command as root user ( all these commands need to be run on master )
 adduser amit
 # switch to amit user
 su amit
