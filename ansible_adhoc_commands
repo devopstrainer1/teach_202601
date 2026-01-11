@@ -1,0 +1,64 @@
+   84  cd /etc/ansible
+   85  sudo vi hosts
+   86  ansible -m ping webservers
+   87  clear
+   88  ansible-doc
+   89  ansible-doc -l
+   90  ansible-doc -l | wc -l
+   91  ansible --version
+   92  ansible-doc command
+   94  ansible --version
+   97  ls -lrt
+   98  sudo vi hosts
+   99  ansible -m ping webservers
+  100  sudo vi hosts
+  101  ansible -m ping webservers
+  102  ansible -m apt -a "name=curl state=present" webservers
+  103  sudo vi /etc/sudoers
+  104  ansible -m apt -a "name=curl state=present" webservers --become
+  105  ansible -m apt -a "name=curl state=absent" webservers --become
+  106  ansible -m apt -a "name=curl state=present" webservers --become
+  107  ansible -m apt -a "name=git,htop,vim state=present" webservers --become
+  108  ansible -m apt -a "name=git,htop,vim state=absent" webservers --become
+  109  ansible -m apt -a "name=git,htop,vim state=present" webservers --become
+  110* sudo ansible -m apt -a "name= state=present" webservers
+  111  ansible -m service -a "name=apache2 state=started" webservers
+  112  ansible -m apt -a "name=apache2 state=present" webservers --become
+  113  ansible -m service -a "name=apache2 state=started" webservers
+  114  ansible -m service -a "name=apache2 state=stopped" webservers
+  115  ansible -m service -a "name=apache2 state=stopped" webservers --become
+  116  ansible -m service -a "name=apache2 state=started" webservers
+  117  ansible -m service -a "name=apache2 state=started" webservers --become
+  118  ansible -m service -a "name=apache2 state=started" webservers
+  119  ansible -m service -a "name=apache2 state=restarted" webservers
+  120  ansible -m service -a "name=apache2 state=restarted" webservers --become
+  121  who
+  122  w
+  123  clear
+  124  cat /etc/passwd
+  125  ansible -m user -a "name=edureka shell=/bin/bash" webservers --become
+  126  ansible -m user -a "name=edureka groups=sudo append=yes" webservers --become
+  127  ansible -m user -a "name=edureka password_lock=no" webservers --become
+  128  ansible -m file -a "path=/tmp/edureka state=directory mode=0644" webservers --become
+  129  ansible -m file -a "path=/tmp/edureka1 state=directory mode=0644" webservers
+  130  ansible -m file -a "path=/tmp/edureka2 state=directory mode=644" webservers
+  131  cd /tmp
+  132  sudo vi a.txt
+  133  ansible -m copy -a "src=/tmp/a.txt dest=/tmp/a.txt" webservers
+  134  ansible -m copy -a "src=/tmp/a.txt dest=/tmp/pritam/a.txt" webservers
+  135  ansible -m copy -a "src=/tmp/a.txt dest=/tmp/pritam/a.txt" webservers --become
+  136  cd /
+  137  ansible-doc ufw
+  138  ansible -m ufw -a "rule=allow port=80 protocol=tcp" webservers --become
+  139  ansible -m setup webservers
+  140  ansible -m apt -a "name=nginx state=present" webservers --become -C
+  141  ansible -m apt -a "name=nginx state=present" webservers --become
+  142  ansible -m shell -a "ps aux | grep apache2" webservers
+  143  ansible -m command -a "ps aux | grep apache2" webservers
+  144  ansible -m command -a "ps aux | grep apache2" webservers --become
+  145  ansible -m command -a "df -kh /tmp" webservers --become
+  146  ansible -m apt -a "name=nginx state=present" webservers --become -c
+  147  ansible -m apt -a "name=nginx state=present" webservers --become -C
+  148  ansible -m apt -a "name=nginx state=absent" webservers --become -C
+  149  ansible -m apt -a "name=nginx state=absent" webservers --become
+  150  ansible -m apt -a "name=nginx state=absent" webservers --become -vvv
