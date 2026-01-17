@@ -1,0 +1,157 @@
+cat a.yml 
+---
+- hosts: webservers1
+  become: true
+  become_user: root
+  gather_facts: false
+
+  tasks:
+    - name: install apache2 package
+      apt:
+        name: apache2
+        state: present
+      ignore_errors: true
+      tags:
+        - install
+        - all
+
+    - name: start the service
+      service:
+        name: apache2
+        state: stopped
+        enabled: yes
+      register: service_status
+      tags:
+        - service
+        - all
+
+    - name: print output
+      debug:
+        msg:
+          - "Service name : {{ service_status.name }}"
+          - "Service state : {{ service_status.state }}"
+
+ansible1@master:/tmp$ cat b.yml 
+---
+- hosts: webservers1
+  become: true
+  become_user: root
+  gather_facts: true
+
+  vars:
+    web_pkg:
+      Debian: apache2
+      RedHat: httpd
+
+  tasks:
+    - name: install apache2 package
+      apt:
+        name: "{{ web_pkg[ansible_os_family] }}"
+        state: present
+      when: ansible_os_family == "Debian"
+      ignore_errors: true
+      tags:
+        - install
+        - all
+
+    - name: install httpd package
+      yum:
+        name: "{{web_pkg[ansible_os_family] }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: start the service
+      service:
+        name: apache2
+        state: stopped
+        enabled: yes
+      when: ansible_os_family == "Debian"
+      register: service_status
+      tags:
+        - service
+        - all
+
+    - name: start the service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+        #- name: print output
+        #debug:
+        #msg:
+        # - "Service name : {{ service_status.name }}"
+        # - "Service state : {{ service_status.state }}"
+
+ansible1@master:/tmp$ cat c.yml 
+---
+- hosts: webservers1
+  become: true
+  become_user: root
+  gather_facts: true
+
+  vars:
+    web_pkg:
+      Debian: apache2
+      RedHat: httpd
+
+  tasks:
+
+    - name: install httpd package
+      yum:
+        name: "{{web_pkg[ansible_os_family] }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: start the service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: copy my web page
+      copy:
+        src: /tmp/index.html
+        dest: /var/www/html/
+
+    - name: restart the service
+      service:
+        name: httpd
+        state: restarted
+ansible1@master:/tmp$ cat d.yml 
+---
+- hosts: webservers1
+  become: true
+  become_user: root
+  gather_facts: true
+
+  vars:
+    web_pkg:
+      Debian: apache2
+      RedHat: httpd
+
+  tasks:
+
+    - name: install httpd package
+      yum:
+        name: "{{web_pkg[ansible_os_family] }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: start the service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: copy my web page
+      copy:
+        src: /tmp/index.html
+        dest: /var/www/html/
+      notify: restart httpd
+
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
