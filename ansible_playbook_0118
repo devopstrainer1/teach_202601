@@ -1,0 +1,142 @@
+cat a.yml 
+---
+- hosts: webservers
+  become: true
+  become_user: root
+
+  tasks:
+  - name: replace the content of config file
+    replace:
+      dest: /tmp/a.txt
+      regexp: 'saturday'
+      replace: 'friday'
+ansible@master:/tmp$ cat b.yml
+---
+- hosts: webservers
+  become: true
+  become_user: root
+
+  tasks:
+  - name: replace the content of config file
+    replace:
+      dest: /tmp/a.txt
+      regexp: 'MONDAY'
+      replace: 'friday'
+ansible@master:/tmp$ cat c.yml
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  tasks:
+  - name: copy the content
+    copy:
+      src: /tmp/a.sh
+      dest: /tmp/
+
+  - name: execute the script
+    command: sh /tmp/a.sh
+ansible@master:/tmp$ cat d.yml 
+---
+- hosts: webservers
+  become: true
+  become_user: root
+
+  tasks:
+  - name: copy content in slave node
+    copy:
+      src: /amir/ansible.txt
+      dest: /tmp/
+      remote_src: yes
+ansible@master:/tmp$ cat e.yml 
+---
+- hosts: host1
+  become: true
+
+  tasks:
+  - name: copy file from one host to another ( host1 to host2 )
+    command: scp /tmp/a.txt ansible@host2:/tmp
+ansible@master:/tmp$ cat f.yml 
+---
+- hosts: webservers
+  become: true
+
+  tasks:
+  - name: copy content from git repo
+    git:
+      repo: https://github.com/devopstrainer1/teach_202601.git
+      dest: /tmp/git
+      version: main
+ansible@master:/tmp$ cat g.yml
+---
+- hosts: webservers
+  become: true
+
+  tasks:
+    - name: stop service which is root owned
+      shell: pkill -u root -f nginx || true
+
+    - name: stop service running with app user
+      shell: pkill -u appuser -f myapp || true
+ansible@master:/tmp$ cat h.yml
+---
+- hosts: webservers
+  become: true
+
+  tasks:
+    - name: stop the service
+      service:
+        name: nginx
+        state: stopped
+      become_user: root
+
+    - name: stop the app service
+      service:
+        name: appservice
+        state: stopped
+      become_user: appuser
+
+ansible@master:/tmp$ cat i.yml 
+---
+- hosts: master
+  become: true
+
+  tasks:
+    - name: run on master
+      command: uptime
+ansible@master:/tmp$ cat j.yml 
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: run on master
+      command: uptime
+      when: inventory_hostname == "localhost"
+
+
+    - name: run on slave
+      command: uptime
+      when: inventory_hostname != "localhost"
+ansible@master:/tmp$ cat l.yml 
+---
+- hosts: webservers
+  become: true
+
+  tasks:
+    - name: execute script
+      shell: "/opt/a.sh {{ env }} "
+ansible@master:/tmp$ cat y.yml 
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  vars:
+    java_packages:
+      - java-1.8.0-openjdk
+    jenkins_admin_username: admin
+    jenkins_admin_password: admin123
+
+
+  roles:
+    - geerlingguy.java
+    - geerlingguy.jenkins
