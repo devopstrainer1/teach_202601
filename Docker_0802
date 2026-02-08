@@ -1,0 +1,130 @@
+3  sudo dnf -y install dnf-plugins-core
+    4  sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+    5  sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    6  sudo systemctl enable --now docker
+    7  systemctl start docker
+    8  clear
+    9  docker --version
+   10  uptime
+
+### Docker commands 
+
+
+   11  docker images
+   12  docker ps -a
+   13  docker run nginx
+   14  docker ps -a
+   15  docker images
+   16  docker run nginx
+   17  docker images
+   18  docker ps -a
+   19  clear
+   20  docker run -itd --name sherry nginx
+   21  docker ps -a
+   22  clear
+   23  docker ps
+   24  docker ps -a
+   25  cat /etc/os-release 
+   26  docker run -it --name samir ubuntu
+   27  docker ps -a
+   28  docker run -it --name pritam ubuntu
+   29  docker ps -a
+   30  docker run -it --name pritam1 ubuntu
+   31  clear
+   32  docker ps -a
+   33  docker run -itd ubuntu
+   34  docker ps -a
+   35  docker rename 1f3c8e7b189f edureka
+   36  docker ps -a
+   37  history
+   38  clear
+   39  docker ps
+   40  docker inspect 1f3c8e7b189f
+   41  docker ps
+   42  docker inspect 94235d30660a
+   43  hostname _i
+   44  hostname -i
+   45  docker ps
+   46  docker logs 1f3c8e7b189f
+   47  docker logs 0a8582f758f0
+   48  docker logs -f 0a8582f758f0
+   49  clear
+   50  docker ps
+   51  docker exec -it 1f3c8e7b189f /bin/bash
+   52  docker ps -a
+   53  clear
+   54  docker ps -a
+   55  docker stop c1596b0f87a7
+   56  docker ps -a
+   57  docker start cc83a2811036
+   58  docker ps -a
+   59  docker ps -a -q
+   60  docker start $(docker ps -a -q)
+   61  docker ps -a
+   62  docker kill 1f3c8e7b189f
+   63  docker ps -a
+   64  docker stop c1596b0f87a7
+   65  docker kill 94235d30660a
+   66  docker stop cc83a2811036
+   67  docker stats
+   68  docker run -itd --memory="512m" nginx
+   69  docker stats
+   70  docker run -itd --memory="512m" --cpus="0.5" nginx
+   71  docker stats
+   72  free -m
+   73  docker top
+   74  docker ps -a
+   75  docker ps 
+   76  docker top be8dd911888c
+   77  clear
+   78  docker ps
+   79  docker inspect be8dd911888c
+   80  clear
+   81  docker ps
+   82  docker run -itd --name sushank -P nginx
+   83  docker ps
+   84  curl ifconfifg.me
+   85  curl ifconfig.me
+   86  docker run -itd --name sushank1 -P nginx
+   87  docker ps
+   88  docker restart f1c7a8129e19
+   89  docker ps
+   90  docker run -itd -p 80:81 --name amit nginx
+   91  docker ps
+   92  docker run -itd -p 81:80 --name amit1 nginx
+   93  docker ps
+   94  docker restart 2186f879568c
+   95  docker ps
+   96  systemctl restart docker
+   97  docker ps -a
+   98  docker start $(docker ps -a -q)
+   99  docker run -itd --restart always nginx
+  100  docker ps -a
+  101  systemctl restart docker
+  102  docker ps -a
+  103  clear
+  104  docker ps -a
+  105  docker container prune
+  106  docker ps -a
+  107  docker rm 6faa67c0d5c7
+  108  docker stop 6faa67c0d5c7
+  109  docker rm 6faa67c0d5c7
+  110  docker ps -a
+  111  docker run -itd --restart always nginx
+  112  docker ps -a
+  113  docker rm -f 86128788eb6c
+  114  docker run -itd --restart always nginx
+  115  docker run -itd --restart always nginx
+  116  docker run -itd --restart always nginx
+  117  clear
+  118  docker ps -a
+  119  docker rm -f a0d857f98014 7754471c636c
+  120  docker ps -a
+  121  cd /tmp
+  122  vi a.txt
+  123  docker cp a.txt 35dd7ca457b0:/tmp
+  124  docker exec -it 35dd7ca457b0 /bin/bash
+  125  clear
+  126  docker ps
+  127  ls
+  128  docker cp 35dd7ca457b0:/tmp/b.txt /tmp
